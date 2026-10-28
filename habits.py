@@ -30,6 +30,17 @@ st.html("""
 positive_habits= ["🏋️‍♀️Workout", "👩‍💻Code", "📚Study"]
 negative_habits= ["📺Watch youtube", "🎮Game"]
 
+if "positive_habits_values" not in st.session_state:
+    st.session_state.positive_habits_values = [False] * len(positive_habits)
+if "count_positive_done" not in st.session_state:
+    st.session_state.count_positive_done= 0
+
+if "negative_habits_values" not in st.session_state:
+    st.session_state.negative_habits_values = [False] * len(negative_habits)
+if "count_negative_done" not in st.session_state:
+    st.session_state.count_negative_done= 0
+
+
 col1, col2= st.columns([6, 6])
 
 with col1:
@@ -47,9 +58,19 @@ with col1:
                     """,
                     unsafe_allow_html=True,
                 )
-                for i in positive_habits:
-                    st.checkbox(f"**{i}**")
+                for index, habit in enumerate(positive_habits):
+                    key = f"positive_habit_{index}"
+
+                    if key not in st.session_state:
+                        st.session_state[key] = st.session_state.positive_habits_values[index]
+
+                    st.checkbox(f"**{habit}**", key=key)
+
+                    st.session_state.positive_habits_values[index] = st.session_state[key]
+
                     st.divider()
+
+                st.session_state.count_positive_done = sum(st.session_state.positive_habits_values)
 
 st.divider()
 
@@ -68,9 +89,20 @@ with col2:
                     """,
                     unsafe_allow_html=True,
                 )
-                for i in negative_habits:
-                    st.checkbox(f"**{i}**")
+                for index, habit in enumerate(negative_habits):
+                    key = f"negative_positive_habit_{index}"
+
+                    if key not in st.session_state:
+                        st.session_state[key] = st.session_state.negative_habits_values[index]
+
+                    st.checkbox(f"**{habit}**", key=key)
+
+                    st.session_state.negative_habits_values[index] = st.session_state[key]
+
                     st.divider()
+
+                st.session_state.count_negative_done = sum(st.session_state.negative_habits_values)
+
 
 progress= st.button("📶 Check out progress")
 

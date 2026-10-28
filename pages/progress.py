@@ -15,7 +15,7 @@ negative_done = st.session_state.count_negative_done
 st.title("📊 Your Progress")
 
 st.subheader("Positive Habits")
-st.progress(positive_done / len(positive_habits)و f"{positive_done} / 3 Negative Habits Completed")
+st.progress(positive_done / len(positive_habits), f"{positive_done} / 3 Negative Habits Completed")
 
 st.subheader("Negative Habits")
 st.progress(negative_done / len(negative_habits), f"{negative_done} / 2 Negative Habits Completed")
